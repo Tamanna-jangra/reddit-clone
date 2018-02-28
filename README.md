@@ -1,2 +1,2 @@
 # reddit-clone
-![Database schema](/RedditDatabse.jpg)
+![Database schema](img/RedditDatabse.jpg)
