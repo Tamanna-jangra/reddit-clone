@@ -1,1 +1,2 @@
 # reddit-clone
+![Database schema](https://keep.google.com/u/0/media/v2/1s_S6c2BbIJtP0a8GV0fPDwE2JuOaEqOnHpMet18LPS_C2tExzkZe3KR7fg2U1vMFn9Wq/1FjJg6YDT0WLQdGuvX94qDtX-b8Uvm4H-M7N37tKxJBrq_MwA9tL0OWwJ3OlSoOMTqUx0?accept=image/gif,image/jpeg,image/jpg,image/png,image/webp,audio/aac&sz=4160)
