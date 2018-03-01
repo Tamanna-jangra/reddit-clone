@@ -4,7 +4,23 @@
     {% if user.is_authenticated %}
         Hi {{ user.username }}!
         <p><a href="{% url 'logout' %}">logout</a></p>
+
+        <table border='2px solid black' class='table'>
+            <thead>
+                <th>Subreddit Name</th>
+                <th>Description</th>
+                <th>Created at</th>
+            </thead>    
+            {%for i in boards%}
+                <tr>
+                    <td><a href="{%url 'board' i.id%}">{{i.name}}</a></td>
+                    <td>{{i.description}}</td>
+                    <td>{{i.created_at}}</td>
+                </tr>
+            {%endfor%}
+        </table>
     {% else %}
+        <h1>Welcome to reddit clone</h1>
         <p>You are not logged in</p>
         <a href="{% url 'login' %}">login</a> |
         <a href="{% url 'signup' %}">signup</a>
