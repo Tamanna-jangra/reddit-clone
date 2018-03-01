@@ -1,7 +1,18 @@
 {%extends 'base.html' %} 
 {%block title%} {{posts.name}} {%endblock%}
-
 {% block content %}
-{{posts.name}} 
-{{posts.PostBoard}} 
+    {%for i in posts.PostBoard.all%}
+            <div class="card">
+                <div class="card-header">
+                    <a href="" class="card-header">{{i.author}}</a>
+                </div>
+                <div class="card-body">
+                    <h4 class='card-title'><a href="{%url 'post' i.id%}">{{i.text}}</a></h4>
+                    <a href="" class="card-link">Reply</a>
+                    <a href="" class="card-link">+1</a>
+                    <a href="" class="card-link">-1</a>
+                </div>
+            </div> 
+        <br>
+    {%endfor%}
 {% endblock %}

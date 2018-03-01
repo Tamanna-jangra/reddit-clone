@@ -8,3 +8,6 @@ def HomePageView(request):
 
 def BoardView(request,id):
     return render(request, 'Board.html', {'posts': SubReddits.objects.get(id=id)})
+
+def PostView(request,id):
+    return render(request,'Post.html',{'comment':Posts.objects.get(id=id)})    
