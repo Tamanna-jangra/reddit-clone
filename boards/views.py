@@ -27,10 +27,20 @@ def BoardView(request,id):
 
 def PostView(request,id):
     p=Posts.objects.get(id=id)
-    v=0
+    pv=0
+    c=0
     for i in p.VotePost.all():
-        v+=i.value
-    return render(request,'Post.html',{'comment':p,'vote':v})
+        pv+=i.value
+    for i in p.CommentPost.all():
+        c+=1
+
+    d={}
+    for i in p.CommentPost.all():
+        cv=0
+        for j in i.VoteComment.all():
+            cv+=1
+        d[i.id]=cv    
+    return render(request,'Post.html',{'comment':p,'vote':pv,'com':c,'comVote':d})
 
 def PostCreateView(request,id):
     if request.method=='POST':
@@ -45,12 +55,16 @@ def PostCreateView(request,id):
         form=PostForm()
     return render(request,'PostCreate.html',{'form':form})    
 
-def PostVoteView(request,id,value):
+def PostVoteView(request,id,value,on):
     if value=='1':
         v=1
     else:
-        v=-1    
-    Votes.objects.create(from_id=str(request.user.username),post_id=Posts.objects.get(id=id),value=v)
+        v=-1
+    if on=='p':        
+        Votes.objects.create(from_id=str(request.user.username),post_id=Posts.objects.get(id=id),value=v)
+    else:
+        Votes.objects.create(from_id=str(request.user.username),comment_id=Comments.objects.get(id=id),value=v)
+
     return render(request, 'home.html', {'boards': SubReddits.objects.all()})
 
 def PostCommentView(request,id,on):
