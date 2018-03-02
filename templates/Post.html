@@ -4,6 +4,9 @@
     <div class="jumbotron">
         <h3>{{comment.text}}</h3>
         <h6>{{comment.detail}}</h6>
+        <a href="{%url 'post_vote' comment.id '1'%}" class="card-link">+1</a>
+        <span class='card-link'>{{vote}}</span>
+        <a href="{%url 'post_vote' comment.id '-1'%}" class="card-link">-1</a>
     </div>
     {%for i in comment.CommentPost.all%}
         <div class="card">
