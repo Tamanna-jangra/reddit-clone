@@ -1,6 +1,7 @@
 {%extends 'base.html' %} 
 {%block title%} {{posts.name}} {%endblock%}
 {% block content %}
+    {{vote}}
     <a href="{%url 'new_post' posts.id%}" class="btn btn-primary">New Post</a>
     {%for i in posts.PostBoard.all%}
             <div class="card">
@@ -10,8 +11,13 @@
                 <div class="card-body">
                     <h4 class='card-title'><a href="{%url 'post' i.id%}">{{i.text}}</a></h4>
                     <a href="" class="card-link">Reply</a>
-                    <a href="" class="card-link">+1</a>
-                    <a href="" class="card-link">-1</a>
+                    <a href="{%url 'post_vote' i.id '1'%}" class="card-link">+1</a>
+                    {%for k,v in vote.items%}
+                        {%if k == i.id%}
+                        <span class='card-link'>{{v}}</span>
+                        {%endif%}
+                    {%endfor%}    
+                    <a href="{%url 'post_vote' i.id '-1'%}" class="card-link">-1</a>
                 </div>
             </div> 
         <br>
