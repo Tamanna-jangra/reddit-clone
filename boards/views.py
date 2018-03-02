@@ -38,7 +38,7 @@ def PostView(request,id):
     for i in p.CommentPost.all():
         cv=0
         for j in i.VoteComment.all():
-            cv+=1
+            cv+=j.value
         d[i.id]=cv    
     return render(request,'Post.html',{'comment':p,'vote':pv,'com':c,'comVote':d})
 
@@ -55,29 +55,40 @@ def PostCreateView(request,id):
         form=PostForm()
     return render(request,'PostCreate.html',{'form':form})    
 
-def PostVoteView(request,id,value,on):
+def PostVoteView(request,id,value,on,pid):
     if value=='1':
         v=1
     else:
         v=-1
     if on=='p':        
         Votes.objects.create(from_id=str(request.user.username),post_id=Posts.objects.get(id=id),value=v)
+        return PostView(request,pid)
     else:
         Votes.objects.create(from_id=str(request.user.username),comment_id=Comments.objects.get(id=id),value=v)
+        return PostView(request,pid)
 
     return render(request, 'home.html', {'boards': SubReddits.objects.all()})
 
-def PostCommentView(request,id,on):
+def PostCommentView(request,id):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             b = get_object_or_404(Posts, id=id)
             text = request.POST['text']
-            if on=='p':
-                Comments.objects.create(from_user=str(request.user.username), post_id=b, text=text)
-            else:
-                pass    
+            Comments.objects.create(from_user=str(request.user.username), post_id=b, text=text)
+               
             return redirect('post', id=id)
     else:
         form=CommentForm()
     return render(request,'CommentCreate.html',{'form':form})    
+
+def DeleteView(request,id,pid,on):
+    if on=='p':
+        Posts.objects.get(id=id).delete()
+    else:
+        Comments.objects.get(id=id).delete()
+        
+    if on=='p':
+        return BoardView(request,pid)
+    else:
+        return PostView(request,pid)

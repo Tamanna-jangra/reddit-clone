@@ -14,7 +14,6 @@ class Posts(models.Model):
     text = models.CharField(max_length=200)
     detail = models.TextField()
     created_at = models.DateField(auto_now_add=True)
-    author=models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='PostUser')
     author=models.CharField(max_length=200,default='')
 
     def __str__(self):

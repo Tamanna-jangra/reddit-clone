@@ -4,22 +4,26 @@
     <div class="jumbotron">
         <h3>{{comment.text}}</h3>
         <h6>{{comment.detail}}</h6>
-        <a href="{%url 'post_vote' comment.id '1' 'p'%}" class="card-link">+1</a>
+        <a href="{%url 'post_comment' comment.id%}" class="card-link">Reply</a>
+        <a href="{%url 'post_vote' comment.id '1' 'p' comment.id%}" class="card-link">+1</a>
         <span class='card-link'>{{vote}}</span>
-        <a href="{%url 'post_vote' comment.id '-1' 'p'%}" class="card-link">-1</a>
+        <a href="{%url 'post_vote' comment.id '-1' 'p' comment.id%}" class="card-link">-1</a>
         <span class='card-link'>Comments({{com}})</span>
     </div>
     {%for i in comment.CommentPost.all%}
         <div class="card">
             <div class="card-body">
                 <p class='card-title'>( <a href="">{{i.from_user}}</a> ) {{i.text}}</p>
-                <a href="{%url 'post_vote' i.id '-1' 'c'%}" class="card-link">+1</a>
+                <a href="{%url 'post_vote' i.id '1' 'c' comment.id%}" class="card-link">+1</a>
                  {%for k,v in comVote.items%} 
                     {%if k == i.id%}
                         <span class='card-link'>{{v}}</span>
                     {%endif%} 
                 {%endfor%}
-                <a href="{%url 'post_vote' i.id '-1' 'c'%}" class="card-link">-1</a>
+                <a href="{%url 'post_vote' i.id '-1' 'c' comment.id%}" class="card-link">-1</a>
+                {%if i.from_user == user.username %}
+                    <a href="{%url 'post_delete' i.id comment.id 'c'%}" class="card-link">Delete</a>
+                {%endif%}
             </div>
         </div>
     {%endfor%}
