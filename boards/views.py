@@ -2,12 +2,17 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import SubReddits,Subscriptions,Posts,Comments,Votes
 from users.models import CustomUser
 from .forms import PostForm,CommentForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def HomePageView(request):
     return render(request,'home.html',{'boards':SubReddits.objects.all()})
 
+@login_required
 def BoardView(request,id):
+    '''
+    Shows the post of a board(subreddit)
+    '''
     s = SubReddits.objects.get(id=id)
     p=s.PostBoard.all()
     dv={}
@@ -25,7 +30,11 @@ def BoardView(request,id):
         dc[i.id]=c
     return render(request, 'Board.html', {'posts': SubReddits.objects.get(id=id),'vote':dv,'com':dc})
 
+@login_required
 def PostView(request,id):
+    '''
+    show detailed post view
+    '''
     p=Posts.objects.get(id=id)
     pv=0
     c=0
@@ -42,7 +51,11 @@ def PostView(request,id):
         d[i.id]=cv    
     return render(request,'Post.html',{'comment':p,'vote':pv,'com':c,'comVote':d})
 
+@login_required
 def PostCreateView(request,id):
+    '''
+    form for creating posts
+    '''
     if request.method=='POST':
         form=PostForm(request.POST)
         if form.is_valid():
@@ -55,7 +68,11 @@ def PostCreateView(request,id):
         form=PostForm()
     return render(request,'PostCreate.html',{'form':form})    
 
-def PostVoteView(request,id,value,on,pid):
+@login_required
+def VoteView(request,id,value,on,pid):
+    '''
+    for voting
+    '''
     if value=='1':
         v=1
     else:
@@ -69,7 +86,11 @@ def PostVoteView(request,id,value,on,pid):
 
     return render(request, 'home.html', {'boards': SubReddits.objects.all()})
 
+@login_required
 def PostCommentView(request,id):
+    '''
+    comment form
+    '''
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -82,7 +103,11 @@ def PostCommentView(request,id):
         form=CommentForm()
     return render(request,'CommentCreate.html',{'form':form})    
 
+@login_required
 def DeleteView(request,id,pid,on):
+    '''
+    deleting Comment and post
+    '''
     if on=='p':
         Posts.objects.get(id=id).delete()
     else:
