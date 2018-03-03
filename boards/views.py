@@ -31,7 +31,10 @@ def BoardView(request,id):
         for j in i.CommentPost.all():
             c+=1
         dc[i.id]=c
-    return render(request, 'Board.html', {'posts': SubReddits.objects.get(id=id),'vote':dv,'com':dc})
+    l=[]
+    for i in Subscriptions.objects.filter(user_id=str(request.user.username)):
+        l.append(i.Boards_id.id)
+    return render(request, 'Board.html', {'posts': SubReddits.objects.get(id=id), 'vote': dv, 'com': dc, 'subs':l})
 
 @login_required
 def PostView(request,id):
@@ -158,3 +161,6 @@ def UserHomeView(request):
     for i in lsubs:        
         l+=i
     return render(request, 'UserHome.html', {'vote': dv, 'com': dc,'subs':l})
+
+def AllPostView(request):
+    return render(request,'AllPost.html',{'post':Posts.objects.all()})   

@@ -3,10 +3,15 @@
 {% block content %}
     <a href="{%url 'new_post' posts.id%}" class="btn btn-primary">New Post</a>
     <a href="{%url 'home'%}" class="btn btn-primary">Boards</a>
+    {%if posts.id in subs%}
+        <a href="{%url 'unsubscribe' posts.id%}" class="btn btn-secondary">Unsubscribe</a>
+    {%else%}
+        <a href="{%url 'subscribe' posts.id%}" class="btn btn-primary">Subscribe</a>
+    {%endif%}
     {%for i in posts.PostBoard.all%}
             <div class="card">
                 <div class="card-header">
-                    <a href="" class="card-header">{{i.author}}</a>
+                    <span class="card-header">{{i.author}}</span>
                     <a href="{%url 'board' posts.id%}" class="card-header">{{posts.name}}</a>
                 </div>
                 <div class="card-body">
