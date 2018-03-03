@@ -3,7 +3,8 @@
 {% block content %}
     {% if user.is_authenticated %}
         Hi {{ user.username }}!
-        <p><a href="{% url 'logout' %}">logout</a></p>
+        <a href="{% url 'logout' %}">logout</a>
+        <p><a href="{%url 'userhome'%}" class="btn btn-primary">Your Subscriptions</a></p>
         {%for i in subs%}
             {{i.Boards_id}}
         {%endfor%}

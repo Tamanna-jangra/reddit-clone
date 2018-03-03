@@ -127,4 +127,34 @@ def SubscribeView(request,id):
     return HomePageView(request)        
 def UnsubscribeView(request,id):
     Subscriptions.objects.get(user_id=str(request.user.username), Boards_id=SubReddits.objects.get(id=id)).delete()
-    return HomePageView(request)        
+    return HomePageView(request)
+
+
+@login_required
+def UserHomeView(request):
+    '''
+    Shows the post of a board(subreddit)
+    '''
+    s=Subscriptions.objects.filter(user_id=str(request.user.username))
+    lsubs=[]
+    for i in s:
+        lsubs.append(i.Boards_id.PostBoard.all())
+    dv = {}
+    for p in lsubs:
+        for i in p: 
+            vote = 0
+            for j in i.VotePost.all():
+                vote += j.value
+            dv[i.id] = vote
+
+    dc = {}
+    for p in lsubs:
+        for i in p:
+            c = 0
+            for j in i.CommentPost.all():
+                c += 1
+            dc[i.id] = c
+    l=[]
+    for i in lsubs:        
+        l+=i
+    return render(request, 'UserHome.html', {'vote': dv, 'com': dc,'subs':l})
