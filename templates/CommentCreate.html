@@ -1,9 +1,10 @@
-{%extends 'base.html' %} 
+{%extends 'base.html' %}
+{% load crispy_forms_tags %}
 {%block title%} Comment {%endblock%} 
 {% block content %}
     <h1>Create Comment Here</h1>
     <form method="post">
-        {%csrf_token%} {{form.as_p}}
+        {%csrf_token%} {{form|crispy}}
         <button class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}
