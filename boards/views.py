@@ -3,6 +3,10 @@ from .models import SubReddits,Subscriptions,Posts,Comments,Votes
 from users.models import CustomUser
 from .forms import PostForm,CommentForm
 from django.contrib.auth.decorators import login_required
+
+# for rest functionality
+from rest_framework import generics
+from . import serializers
 # Create your views here.
 
 def HomePageView(request):
@@ -164,3 +168,48 @@ def UserHomeView(request):
 
 def AllPostView(request):
     return render(request,'AllPost.html',{'post':Posts.objects.all()})   
+
+# REST Functionality
+# Subreddit REST
+class SubRedditList(generics.ListAPIView):
+    queryset=SubReddits.objects.all()
+    serializer_class=serializers.SubRedditsSerializer
+class SubRedditDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset=SubReddits.objects.all()
+    serializer_class=serializers.SubRedditsSerializer
+
+# Subscriptions REST
+
+class SubscriptionsList(generics.ListAPIView):
+    queryset=Subscriptions.objects.all()
+    serializer_class=serializers.SubscriptionsSerializer
+class SubscriptionsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Subscriptions.objects.all()
+    serializer_class=serializers.SubscriptionsSerializer
+
+# Post REST
+
+class PostsList(generics.ListAPIView):
+    queryset=Posts.objects.all()
+    serializer_class=serializers.PostsSerializer
+class PostsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Posts.objects.all()
+    serializer_class=serializers.PostsSerializer
+
+# Comments REST
+
+class CommentsList(generics.ListAPIView):
+    queryset=Comments.objects.all()
+    serializer_class=serializers.CommentsSerializer
+class CommentsDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Comments.objects.all()
+    serializer_class=serializers.CommentsSerializer
+
+# Votes REST
+
+class VotesList(generics.ListAPIView):
+    queryset=Votes.objects.all()
+    serializer_class=serializers.VotesSerializer
+class VotesDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset=Votes.objects.all()
+    serializer_class=serializers.VotesSerializer

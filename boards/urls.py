@@ -12,4 +12,19 @@ urlpatterns = [
     path('delete/<int:id>/<int:pid>/<on>', views.DeleteView,name='post_delete'),
     path('subscribe/<int:id>',views.SubscribeView,name='subscribe'),
     path('unsubscribe/<int:id>',views.UnsubscribeView,name='unsubscribe'),
+    #REST API urls
+    path('api/',views.SubRedditList.as_view()),
+    path('api/<int:pk>/', views.SubRedditDetail.as_view()),
+
+    path('api/subscriptions/',views.SubscriptionsList.as_view()),
+    path('api/subscriptions/<int:pk>/', views.SubscriptionsDetail.as_view()),
+
+    path('api/posts/',views.PostsList.as_view()),
+    path('api/posts/<int:pk>/', views.PostsDetail.as_view()),
+
+    path('api/comment/',views.CommentsList.as_view()),
+    path('api/comment/<int:pk>/', views.CommentsDetail.as_view()),
+
+    path('api/votes',views.VotesList.as_view()),
+    path('api/votes/<int:pk>/', views.VotesDetail.as_view()),
 ]
