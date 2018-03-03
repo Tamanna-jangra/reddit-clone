@@ -117,3 +117,7 @@ def DeleteView(request,id,pid,on):
         return BoardView(request,pid)
     else:
         return PostView(request,pid)
+
+def SubscribeView(request,id):
+    Subscriptions.objects.create(user_id=str(request.user.username),Boards_id=SubReddits.objects.get(id=id))
+    return HomePageView(request)        

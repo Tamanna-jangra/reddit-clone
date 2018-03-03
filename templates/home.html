@@ -16,6 +16,7 @@
                     <td><a href="{%url 'board' i.id%}">{{i.name}}</a></td>
                     <td>{{i.description}}</td>
                     <td>{{i.created_at}}</td>
+                    <td> <a href="{%url 'subscribe' i.id%}">Subscribe</a> </td>
                 </tr>
             {%endfor%}
         </table>
