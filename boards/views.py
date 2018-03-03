@@ -6,7 +6,10 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def HomePageView(request):
-    return render(request,'home.html',{'boards':SubReddits.objects.all()})
+    l=[]
+    for i in Subscriptions.objects.filter(user_id=str(request.user.username)):
+        l.append(i.Boards_id.id)
+    return render(request, 'home.html', {'boards': SubReddits.objects.all(), 'subs':l})
 
 @login_required
 def BoardView(request,id):
@@ -79,12 +82,13 @@ def VoteView(request,id,value,on,pid):
         v=-1
     if on=='p':        
         Votes.objects.create(from_id=str(request.user.username),post_id=Posts.objects.get(id=id),value=v)
+        return BoardView(request,pid)
+    elif on=='pi':        
+        Votes.objects.create(from_id=str(request.user.username),post_id=Posts.objects.get(id=id),value=v)
         return PostView(request,pid)
     else:
         Votes.objects.create(from_id=str(request.user.username),comment_id=Comments.objects.get(id=id),value=v)
         return PostView(request,pid)
-
-    return render(request, 'home.html', {'boards': SubReddits.objects.all()})
 
 @login_required
 def PostCommentView(request,id):
@@ -120,4 +124,7 @@ def DeleteView(request,id,pid,on):
 
 def SubscribeView(request,id):
     Subscriptions.objects.create(user_id=str(request.user.username),Boards_id=SubReddits.objects.get(id=id))
+    return HomePageView(request)        
+def UnsubscribeView(request,id):
+    Subscriptions.objects.get(user_id=str(request.user.username), Boards_id=SubReddits.objects.get(id=id)).delete()
     return HomePageView(request)        

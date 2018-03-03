@@ -1,22 +1,29 @@
 {% extends 'base.html' %} 
 {% block title %}Home{% endblock %} 
-{% block content %} 
+{% block content %}
     {% if user.is_authenticated %}
         Hi {{ user.username }}!
         <p><a href="{% url 'logout' %}">logout</a></p>
-
+        {%for i in subs%}
+            {{i.Boards_id}}
+        {%endfor%}
         <table border='2px solid black' class='table'>
             <thead>
                 <th>Subreddit Name</th>
                 <th>Description</th>
                 <th>Created at</th>
+                <th>Status</th>
             </thead>    
             {%for i in boards%}
                 <tr>
                     <td><a href="{%url 'board' i.id%}">{{i.name}}</a></td>
                     <td>{{i.description}}</td>
                     <td>{{i.created_at}}</td>
-                    <td> <a href="{%url 'subscribe' i.id%}">Subscribe</a> </td>
+                    {%if i.id in subs %}
+                        <td> <a href="{%url 'unsubscribe' i.id%}">Unsubscribe</a> </td>
+                    {%else%}    
+                        <td> <a href="{%url 'subscribe' i.id%}">Subscribe</a> </td>
+                    {%endif%}    
                 </tr>
             {%endfor%}
         </table>

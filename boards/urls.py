@@ -9,4 +9,5 @@ urlpatterns = [
     path('comment/<int:id>', views.PostCommentView,name='post_comment'),
     path('delete/<int:id>/<int:pid>/<on>', views.DeleteView,name='post_delete'),
     path('subscribe/<int:id>',views.SubscribeView,name='subscribe'),
+    path('unsubscribe/<int:id>',views.UnsubscribeView,name='unsubscribe'),
 ]

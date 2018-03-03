@@ -5,9 +5,9 @@
         <h3>{{comment.text}}</h3>
         <h6>{{comment.detail}}</h6>
         <a href="{%url 'post_comment' comment.id%}" class="card-link">Reply</a>
-        <a href="{%url 'post_vote' comment.id '1' 'p' comment.id%}" class="card-link">+1</a>
+        <a href="{%url 'post_vote' comment.id '1' 'pi' comment.id%}" class="card-link">+1</a>
         <span class='card-link'>{{vote}}</span>
-        <a href="{%url 'post_vote' comment.id '-1' 'p' comment.id%}" class="card-link">-1</a>
+        <a href="{%url 'post_vote' comment.id '-1' 'pi' comment.id%}" class="card-link">-1</a>
         <span class='card-link'>Comments({{com}})</span>
     </div>
     {%for i in comment.CommentPost.all%}
