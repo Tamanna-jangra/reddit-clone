@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset ="utf-8">
+    <meta http-equiv="X-UA-Compatiable" content="IE = edge">
+    <meta name="viewport" content="width=device-width ,initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        body{
+            background-color:gray;
+        }
+        #header-nav{
+            background-color:lightgray;
+        }
+       #tab{
+        font-size:1.5em;
+        margin-top:2em;
+       }
+    </style>
+</head>
+<body>
+<header>
+<nav class="navbar navbar-default" id="header-nav">
+    <div class="nav navbar-nav navbar-right">
+        <button  type="button" style="font-size:1.7em" class="btn btn-default"><span class="glyphicon glyphicon-log-out"></span>LogOut</button>
+        <button  class="btn btn-default"  style="font-size:1.7em" href="#" type="button"><span class="glyphicon glyphicon-user"></span>User</button>
+    </div>
+</header>
+<div class="container">
+<button style="font-size:1.5em" type="button" class="btn btn-success">Your Subscriptions</button>
+        <table class="table" id="tab">
+        <thead>
+        <tr class="warning">
+            <th>Subreddit Name</th>
+            <th>Description</th>
+            <th>Created</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td ><a href="#">funny</a></td>
+            <td>home for the best content on the internet</td>
+            <td>Feb. 28, 2018</td>
+            <td>subscribe</td>
+        </tr>
+        <tr class="success">
+            <td><a href="#">Django</a></td>
+            <td>Best Django community</td>
+            <td>March 3, 2018</td>
+            <td>subscribe</td>
+        </tr>
+        <tr class="danger">
+            <td><a href="#">Python</a></td>
+            <td>Really a great Group of Pythonistas</td>
+            <td>March 3, 2018</td>
+            <td>subscribe</td>
+        </tr>
+
+        </tbody>
+    </table>
+</body>
+</html>
